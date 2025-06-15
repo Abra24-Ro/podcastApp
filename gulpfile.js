@@ -1,6 +1,6 @@
 import gulp from "gulp";
 import gulpSass from "gulp-sass";
-import dartSass from "sass";
+import * as dartSass from "sass";
 import postcss from "gulp-postcss";
 import autoprefixer from "autoprefixer";
 import sourcemaps from "gulp-sourcemaps";
@@ -62,8 +62,11 @@ function dev() {
   watch("src/img/**/*", imagenes);
 }
 
+// Para desarrollo local (con AVIF)
 const desarrollo = series(imagenes, versionWebp, versionAvif, css, dev);
-const produccion = series(imagenes, versionWebp, versionAvif, cssProd);
+
+// Para producción/Netlify (sin AVIF)
+const produccion = series(imagenes, versionWebp, cssProd);
 
 export {
   css,
