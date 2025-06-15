@@ -19,6 +19,29 @@ function errorHandler(err) {
   this.emit("end");
 }
 
+// Copiar archivos HTML
+function html() {
+  return src("src/**/*.html")
+    .pipe(dest("build"));
+}
+
+// Copiar archivos estáticos (JS, fonts, etc.)
+function assets() {
+  return src([
+    "src/**/*",
+    "!src/scss/**/*",
+    "!src/img/**/*",
+    "!src/**/*.html"
+  ])
+    .pipe(dest("build"));
+}
+
+// Si el HTML está en la raíz del proyecto
+function htmlRoot() {
+  return src("*.html")
+    .pipe(dest("build"));
+}
+
 function css(done) {
   src("src/scss/app.scss")
     .pipe(plumber({ errorHandler }))
@@ -60,18 +83,35 @@ function versionAvif() {
 function dev() {
   watch("src/scss/**/*.scss", css);
   watch("src/img/**/*", imagenes);
+  watch("src/**/*.html", html);
+  watch("*.html", htmlRoot);
 }
 
 // Para desarrollo local (con AVIF)
-const desarrollo = series(imagenes, versionWebp, versionAvif, css, dev);
+const desarrollo = series(
+  parallel(html, htmlRoot, assets),
+  imagenes, 
+  versionWebp, 
+  versionAvif, 
+  css, 
+  dev
+);
 
 // Para producción/Netlify (sin AVIF)
-const produccion = series(imagenes, versionWebp, cssProd);
+const produccion = series(
+  parallel(html, htmlRoot, assets),
+  imagenes,
+  versionWebp,
+  cssProd
+);
 
 export {
   css,
   cssProd,
   dev,
+  html,
+  htmlRoot,
+  assets,
   imagenes,
   versionWebp,
   versionAvif,
