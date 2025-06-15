@@ -1,0 +1,45 @@
+@use "base/variables" as v;
+@use "base/mixins" as m;
+
+.beneficios {
+  background-color: v.$primario;
+  padding: 5rem 0;
+
+  &__grid {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+
+    @include m.tablet {
+      display: grid;
+      @include m.grid(5, 4rem);
+      align-items: center;
+    }
+  }
+
+  &__contenido {
+    color: v.$blanco;
+    grid-column: 1 / 4;
+
+    p {
+      font-size: 1.8rem;
+      line-height: 1.6;
+      opacity: 0.8;
+    }
+  }
+
+  &__titulo {
+    @include m.headingBorder(v.$secundario, v.$blanco);
+  }
+
+  &__imagen {
+    grid-column: 4 / 6;
+    transition: transform 0.4s ease, box-shadow 0.3s ease;
+    will-change: transform, box-shadow;
+
+    &:hover {
+      transform: rotate(2deg) scale(1.05);
+      box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
+    }
+  }
+}

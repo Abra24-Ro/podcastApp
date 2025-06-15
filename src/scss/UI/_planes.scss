@@ -1,0 +1,137 @@
+@use "base/variables" as v;
+@use "base/mixins" as m;
+
+.planes {
+  background-color: v.$secundario;
+  padding: 5rem 0;
+
+  &__titulo {
+    @include m.headingBorder(v.$blanco, v.$primario);
+    color: v.$blanco;
+    text-align: center;
+    font-size: 3.6rem;
+    margin-bottom: 2rem;
+  }
+
+  &__descripcion {
+    color: v.$blanco;
+    opacity: 0.8;
+    text-align: center;
+    max-width: 60rem;
+    margin: 0 auto 4rem auto;
+    font-size: 1.8rem;
+    line-height: 1.6;
+  }
+
+  &__grid {
+    display: flex;
+    flex-direction: column;
+
+    @include m.tablet {
+      flex-direction: row;
+      margin-inline: auto;
+      margin-block-start: 10rem;
+      max-width: 80rem;
+    }
+  }
+}
+
+// === PLANES INDIVIDUALES ===
+.plan {
+  background-color: v.$blanco;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16rem 4rem 4rem;
+  border-bottom: 1px solid #e1e1e1;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: translateY(-1rem);
+  }
+
+  &--inicio {
+    @include m.iconBg("../img/icono_inicio.svg");
+  }
+
+  &--negocio {
+    background-color: v.$primario;
+    color: v.$blanco;
+    order: -1;
+
+    @include m.iconBg("../img/icono_negocio.svg");
+
+    @include m.tablet {
+      order: unset;
+      margin: -5rem 0;
+      border-radius: 1.2rem;
+      box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.05);
+      position: relative;
+      overflow: hidden;
+      background-position: 50% 7rem;
+      padding-top: calc( 16rem + 5rem);
+
+    }
+
+    a.plan__boton {
+      background-color: v.$blanco;
+      color: v.$primario;
+    }
+  }
+
+  &--pro {
+    @include m.iconBg("../img/icono_pro.svg");
+  }
+
+  &__titulo {
+    font-size: 2.4rem;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  &__precio {
+    font-size: 2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 2rem;
+
+    span {
+      font-weight: 400;
+      font-size: 1.4rem;
+      display: block;
+    }
+  }
+
+  &__caracteristicas {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem 0;
+
+    li {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-size: 1.6rem;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  &__boton {
+    background-color: v.$primario;
+    color: v.$blanco;
+    padding: 1.2rem 2.4rem;
+    border-radius: 0.8rem;
+    text-decoration: none;
+    font-weight: bold;
+    text-align: center;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: darken(v.$primario, 10%);
+    }
+  }
+}
